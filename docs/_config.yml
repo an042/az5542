@@ -1,7 +1,7 @@
 # Permalinks
 #
 # Use of `relative_permalinks` ensures post links from the index work properly.
-permalink:           /:year/:month/:day/:title/
+permalink:           /:year-:month-:day-:title/
 #relative_permalinks: true
 
 # Setup
@@ -20,3 +20,17 @@ paginate:            5
 
 # Custom vars
 #version:             1.0.0
+
+# Use the following plug-ins
+gems:
+  - jekyll-sitemap # Create a sitemap using the official Jekyll sitemap gem
+#  - jekyll-feed # Create an Atom feed using the official Jekyll feed gem
+
+# Exclude these files from your production _site
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - LICENSE
+  - README.md
+  - CNAME
+
