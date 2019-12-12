@@ -1,134 +1,353 @@
-# Lanyon
+# whiteglass
 
-Lanyon is an unassuming [Jekyll](http://jekyllrb.com) theme that places content first by tucking away navigation in a hidden drawer. It's based on [Poole](http://getpoole.com), the Jekyll butler.
+[![Gem Version](https://badge.fury.io/rb/jekyll-whiteglass.svg)](https://badge.fury.io/rb/jekyll-whiteglass)
+[![Build Status](https://travis-ci.org/yous/whiteglass.svg?branch=master)](https://travis-ci.org/yous/whiteglass)
 
-![Lanyon](https://f.cloud.github.com/assets/98681/1825266/be03f014-71b0-11e3-9539-876e61530e24.png)
-![Lanyon with open sidebar](https://f.cloud.github.com/assets/98681/1825267/be04a914-71b0-11e3-966f-8afe9894c729.png)
+Minimal, responsive Jekyll theme for hackers.
 
+![whiteglass theme](screenshot.png)
 
-## Contents
+## Installation
 
-- [Usage](#usage)
-- [Options](#options)
-  - [Sidebar menu](#sidebar-menu)
-  - [Themes](#themes)
-  - [Reverse layout](#reverse-layout)
-- [Development](#development)
-- [Author](#author)
-- [License](#license)
+Add this line to your Jekyll site's Gemfile:
 
+``` ruby
+gem "jekyll-whiteglass"
+```
+
+And add this line to your Jekyll site's `_config.yml`:
+
+``` yaml
+theme: jekyll-whiteglass
+```
+
+And then execute:
+
+``` sh
+bundle
+```
+
+Or install it yourself as:
+
+``` sh
+gem install jekyll-whiteglass
+```
+
+## Quick Start
+
+1. Generate a new Jekyll blog:
+
+   ``` sh
+   jekyll new blog --skip-bundle
+   cd blog
+   ```
+
+2. Edit `Gemfile` to use whiteglass theme:
+
+   ``` ruby
+   gem "jekyll-whiteglass"
+   ```
+
+3. Edit `_config.yml` to use whiteglass theme and its plugins:
+
+   ``` yaml
+   theme: jekyll-whiteglass
+   plugins:
+     - jekyll-archives
+     - jekyll-paginate
+     - jekyll-sitemap
+
+   permalink: /:year/:month/:day/:title/
+   paginate_path: /posts/:num/
+   paginate: 5
+
+   jekyll-archives:
+     enabled:
+       - categories
+       - tags
+     layout: category_archives
+     permalinks:
+       category: /categories/:name/
+       tag: /tags/:name/
+   ```
+
+4. Copy
+   [`index.html`](https://github.com/yous/whiteglass/blob/master/index.html),
+   [`about.md`](https://github.com/yous/whiteglass/blob/master/about.md),
+   [`archives.md`](https://github.com/yous/whiteglass/blob/master/archives.md),
+   [`feed.xml`](https://github.com/yous/whiteglass/blob/master/feed.xml), and
+   [`_data/navigation.yml`](https://github.com/yous/whiteglass/blob/master/_data/navigation.yml)
+   from the theme:
+
+   ``` sh
+   rm index.md
+   curl -L -O "https://github.com/yous/whiteglass/raw/master/{index.html,about.md,archives.md,feed.xml}"
+   curl -L --create-dirs -o _data/navigation.yml https://github.com/yous/whiteglass/raw/master/_data/navigation.yml
+   ```
+
+5. Install gems and you're good to go! The blog will be available on
+   `http://127.0.0.1:4000`.
+
+   ``` sh
+   bundle install
+   bundle exec jekyll serve
+   ```
+
+## Deployment to GitHub Pages using Travis CI
+
+This theme uses [jekyll-archives](https://github.com/jekyll/jekyll-archives) gem
+which is [not supported by GitHub Pages](https://help.github.com/articles/configuring-jekyll-plugins/).
+If you want to use full features like categories and tags, I recommend you to
+use Travis CI or other CI services.
+
+To deploy using Travis CI, first copy the [`.travis.yml`](https://github.com/yous/whiteglass/blob/master/.travis.yml)
+of this repository. You can change `target-branch` (`gh-pages` by default) and
+`on.branch` (`master` by default) as you want. If you want further
+customization, see [Travis CI's documentation page](https://docs.travis-ci.com/user/deployment/pages/).
+
+You'll see there's `github-token: $GITHUB_TOKEN`, and this is what you should
+configure. Go to your [personal access tokens](https://github.com/settings/tokens)
+page, and generate new token with `public_repo` or `repo` permission as you
+need. Then go to Travis CI's settings page of your repository, and add a new
+environment variable `GITHUB_TOKEN` with the value of the token you generated.
 
 ## Usage
 
-Lanyon is a theme built on top of [Poole](https://github.com/poole/poole), which provides a fully furnished Jekyll setup—just download and start the Jekyll server. See [the Poole usage guidelines](https://github.com/poole/poole#usage) for how to install and use Jekyll.
+### Customization
 
+To override the default structure and style of whiteglass, simply create the
+concerned directory at the root of your site, copy the file you wish to
+customize to that directory, and then edit the file. e.g., to override the
+[`_includes/footer_content.html`](_includes/footer_content.html) file to add
+contents to footer, create an `_includes` directory, copy
+`_includes/footer_content.html` from jekyll-whiteglass gem folder to
+`<your-site>/_includes` and start editing that file.
 
-## Options
+For example, you can add favicons to `_includes/head_custom.html`:
 
-Lanyon includes some customizable options, typically applied via classes on the `<body>` element.
-
-
-### Sidebar menu
-
-Create a list of nav links in the sidebar by assigning each Jekyll page the correct layout in the page's [front-matter](http://jekyllrb.com/docs/frontmatter/).
-
+``` html
+<link rel="icon" type="image/x-icon" href="{{ "/favicon.ico" | relative_url }}">
+<link rel="apple-touch-icon" href="{{ "/apple-touch-icon.png" | relative_url }}">
+<link rel="apple-touch-icon" sizes="76x76" href="{{ "/apple-touch-icon-76x76.png" | relative_url }}">
+<link rel="apple-touch-icon" sizes="120x120" href="{{ "/apple-touch-icon-120x120.png" | relative_url }}">
+<link rel="apple-touch-icon" sizes="152x152" href="{{ "/apple-touch-icon-152x152.png" | relative_url }}">
+<link rel="apple-touch-icon" sizes="180x180" href="{{ "/apple-touch-icon-180x180.png" | relative_url }}">
 ```
+
+The site's default CSS is in the gem itself,
+[`assets/main.scss`](assets/main.scss). To override the default CSS, the file
+has to exist at your site source. Do either of the following:
+
+- Create a new instance of `main.scss` at site source
+  - Create a new file `main.scss` at `<your-site>/assets/`
+  - Add the frontmatter dashes, and
+  - Add `@import "whiteglass";`, to `<your-site>/assets/main.scss`
+  - Add your custom CSS
+- Download the file from this repo
+  - Create a new file `main.scss` at `<your-site>/assets/`
+  - Copy the contents at [`assets/main.scss`](assets/main.scss) onto the `main.scss` you just created, and edit away
+- Copy directly from jekyll-whiteglass gem
+  - Go to your local jekyll-whiteglass gem installation directory (run `bundle show jekyll-whiteglass` to get the path to it)
+  - Copy the `assets/` folder from there into the root of `<your-site>`
+  - Change whatever values you want, inside `<your-site>/assets/main.scss`
+
+### Locale
+
+`site.lang` is used to declare the primary language for each web page within the
+site.
+
+`lang: en-US` sets the `lang` attribute for the site to the United States flavor
+of English, while `en-GB` would be for the United Kingdom style of English.
+Country codes are optional and the shorter variation `lang: en` is also
+acceptable. You may want to write a post in different language, then add `lang`
+attribute to the frontmatter of that post:
+
+``` yaml
+layout: post
+title: "안녕하세요"
+lang: ko
+```
+
+### Description
+
+`site.description` describes the site. This is mainly used in meta descriptions
+for improving SEO. Also, you can set `description` attribute for each post:
+
+``` yaml
+layout: post
+title: Awesome Post
+description: This is an awesome post.
+```
+
+If you don't specify `post.description`, then `post.excerpt` will be used if it
+exist.
+
+### External URL
+
+`external-url` turns the title of your post to a link. Specify a URL which you
+want to link to.
+
+``` yaml
+layout: post
+title: Jekyll whiteglass theme
+external-url: https://github.com/yous/whiteglass
+```
+
+Then the title of your post would look like a link with text
+`Jekyll whiteglass theme →`. This also applies to your blog feed.
+
+### Category
+
+Each post can have `categories` attribute. It can be a string or an array. This
+will be displayed on index, archive and each post, and provide a link to the
+archive of category.
+
+``` yaml
+layout: post
+title: Awesome Post
+categories: Misc
+```
+
+``` yaml
+layout: post
+title: Another Awesome Post
+categories:
+  - Misc
+  - Idea
+```
+
+### Tag
+
+Each post can have `tags` attribute. It can be a string or an array. This will
+be displayed on index, archive and each post, and provide a link to the archive
+of tag.
+
+``` yaml
+layout: post
+title: Awesome Post
+tags: food
+```
+
+``` yaml
+layout: post
+title: Another Awesome Post
+tags:
+  - food
+  - trip
+```
+
+### Feed
+
+Create `<your-site>/feed.xml` with:
+
+``` yaml
 ---
-layout: page
-title: About
+layout: feed
 ---
 ```
 
-**Why require a specific layout?** Jekyll will return *all* pages, including the `atom.xml`, and with an alphabetical sort order. To ensure the first link is *Home*, we exclude the `index.html` page from this list by specifying the `page` layout.
+If you want to use another path for feed, you can specify a non-default path via
+your site's config.
 
-
-### Themes
-
-Lanyon ships with eight optional themes based on the [base16 color scheme](https://github.com/chriskempson/base16). Apply a theme to change the color scheme (mostly applies to sidebar and links).
-
-![Lanyon with red theme](https://f.cloud.github.com/assets/98681/1825270/be065110-71b0-11e3-9ed8-9b8de753a4af.png)
-![Lanyon with red theme and open sidebar](https://f.cloud.github.com/assets/98681/1825269/be05ec20-71b0-11e3-91ea-a9138ef07186.png)
-
-There are eight themes available at this time.
-
-![Available theme classes](https://f.cloud.github.com/assets/98681/1817044/e5b0ec06-6f68-11e3-83d7-acd1942797a1.png)
-
-To use a theme, add any one of the available theme classes to the `<body>` element in the `default.html` layout, like so:
-
-```html
-<body class="theme-base-08">
-  ...
-</body>
+``` yaml
+feed:
+  path: atom.xml
 ```
 
-To create your own theme, look to the Themes section of [included CSS file](https://github.com/poole/lanyon/blob/master/public/css/lanyon.css). Copy any existing theme (they're only a few lines of CSS), rename it, and change the provided colors.
+Then create `<your-site>/atom.xml` with the same content of `feed.xml` above.
 
+### Comments
 
-### Reverse layout
+whiteglass provides the ability to include your favourite commenting service, like [Disqus](https://disqus.com) or [Isso](https://posativ.org/isso).
 
-![Lanyon with reverse layout](https://f.cloud.github.com/assets/98681/1825265/be03f2e4-71b0-11e3-89f1-360705524495.png)
-![Lanyon with reverse layout and open sidebar](https://f.cloud.github.com/assets/98681/1825268/be056174-71b0-11e3-88c8-5055bca4307f.png)
+To enable comments on pages and posts:
+1. Overwrite the `_includes/custom_comments_provider.html` with your custom provider of comments.
+2. Add `comments: true` to your `_config.yml`.
 
-Reverse the page orientation with a single class.
+To disable comments on certain pages or posts specify `comments: false` in the front matter of the page or post.
 
-```html
-<body class="layout-reverse">
-  ...
-</body>
+### Metadata for SEO
+
+#### Keywords
+
+Each post can have `keywords` attribute. This is a comma-separated list which is
+used in meta descriptions for improving SEO.
+
+``` yaml
+layout: post
+title: How to configure jekyll-whiteglass
+keywords: jekyll, whiteglass, github pages
 ```
 
+YAML list is also available:
 
-### Sidebar overlay instead of push
-
-Make the sidebar overlap the viewport content with a single class:
-
-```html
-<body class="sidebar-overlay">
-  ...
-</body>
+``` yaml
+keywords:
+  - jekyll
+  - whiteglass
+  - github pages
 ```
 
-This will keep the content stationary and slide in the sidebar over the side content. It also adds a `box-shadow` based outline to the toggle for contrast against backgrounds, as well as a `box-shadow` on the sidebar for depth.
+#### Twitter
 
-It's also available for a reversed layout when you add both classes:
+- `site.twitter_username` sets `twitter:site` and `twitter:creator` meta tag
+- `site.twitter_image` sets `twitter:image:src` meta tag
+- `page.twitter_card.type` sets `twitter:card` meta tag (default: `summary`)
+  - If `page.twitter_card.type` is `gallery`, it sets `twitter:image0`, `twitter:image1`, `twitter:image2` and `twitter:image3` meta tags with `page.twitter_card.image`, `page.twitter_card.image1`, `page.twitter_card.image2` and `page.twitter_card.image3`, respectively
+  - If `page.twitter_card.type` is `photo`, `page.twitter_card.width` sets `twitter:image:width` meta tag and `page.twitter_card.height` sets `twitter:image:height` meta tag
+- `page.twitter_card.creator` sets `twitter:creator` meta tag. It overrides `site.twitter_username`
+- `page.twitter_card.image` sets `twitter:image:src` meta tag if `page.twitter_card.type` is not `gallery`. It overrides `site.twitter_image`
 
-```html
-<body class="layout-reverse sidebar-overlay">
-  ...
-</body>
+#### Facebook
+
+- `site.facebook_app_id` sets `fb:admins` meta tag
+- `site.facebook_page` sets `article:author` meta tag
+- `site.facebook_image` sets `og:image` meta tag
+- `page.facebook.image` sets `og:image` meta tag. It overrides `site.facebook_image`
+
+### Navigation
+
+To define header links, add titles and URLs under the `main` key in
+`_data/navigation.yml`:
+
+``` yaml
+main:
+  - title: "About"
+    url: /about/
+  - title: "Archives"
+    url: /archives/
+  - title: "GitHub"
+    url: https://github.com/yous/whiteglass
 ```
 
-### Sidebar open on page load
+### Enabling Google Analytics
 
-Show an open sidebar on page load by modifying the `<input>` tag within the `sidebar.html` layout to add the `checked` boolean attribute:
+To enable Google Analytics, add the following lines to your Jekyll site:
 
-```html
-<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox" checked>
+``` yaml
+google_analytics: UA-NNNNNNNN-N
 ```
 
-Using Liquid you can also conditionally show the sidebar open on a per-page basis. For example, here's how you could have it open on the homepage only:
+## Contributing
 
-```html
-<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox" {% if page.title =="Home" %}checked{% endif %}>
-```
+Bug reports and pull requests are welcome on GitHub at
+<https://github.com/yous/whiteglass>. This project is intended to be a safe,
+welcoming space for collaboration, and contributors are expected to adhere to
+the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## Development
 
-Lanyon has two branches, but only one is used for active development.
+To set up your environment to develop this theme, run `bundle install`.
 
-- `master` for development.  **All pull requests should be to submitted against `master`.**
-- `gh-pages` for our hosted site, which includes our analytics tracking code. **Please avoid using this branch.**
-
-
-## Author
-
-**Mark Otto**
-- <https://github.com/mdo>
-- <https://twitter.com/mdo>
-
+Your theme is setup just like a normal Jekyll site! To test your theme, run
+`bundle exec jekyll serve` and open your browser at
+`http://localhost:4000/whiteglass/`. This starts a Jekyll server using your
+theme. Add pages, documents, data, etc. like normal to test your theme's
+contents. As you make modifications to your theme and to your content, your site
+will regenerate and you should see the changes in the browser after a refresh,
+just like normal.
 
 ## License
 
-Open sourced under the [MIT license](LICENSE.md).
-
-<3
+The theme is available as open source under the terms of the
+[MIT License](http://opensource.org/licenses/MIT).
