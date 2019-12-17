@@ -1,10 +1,10 @@
 # Site settings
-title: Monochrome | A minimal, responsive Jekyll blog theme
-description: "A minimal, responsive, ready to use blog template, built with Jekyll."
-url: "http://www.dyutibarma.github.io/monochrome"
+title: Faceofplace | Face of Place
+description: "A minimal blog"
+url: "https://faceofplace.com"
 author:
-  name: "The Review Index"
-  email: "dyutibarma@gmail.com"
+  name: "FACEOFPLACE"
+  email: "hello@faceofplace.com"
   url: "https://faceofplace.com"
 
 # Build settings
