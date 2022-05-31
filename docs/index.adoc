@@ -1,7 +1,7 @@
 //
 // file: index.adoc
 //
-= Werner's Blog
+= Worner's Blog
 :sectnums:
 :toc: left
 :toclevels: 3
